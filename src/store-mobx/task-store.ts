@@ -1,13 +1,13 @@
 import { makeAutoObservable } from "mobx"
 import { Task } from "../rest-api/types"
-import { Draggable } from "../store/types"
-import { TASK_CREATED, TASK_DELETED, TASK_NOT_CREATED, TASK_NOT_DELETED, TASK_NOT_UPDATED, TASK_UPDATED } from "../store/constants"
+import { 
+    TASK_CREATED, TASK_DELETED, TASK_NOT_CREATED, TASK_NOT_DELETED, TASK_NOT_UPDATED, TASK_UPDATED 
+} from "../store/constants"
 
 class TaskState {
     tasks: Task[] = []
     currentTask: Task | null = null
     displayedTask: Task | null = null
-    draggableTask: Task | null = null
     actionMessage: string = ''
     
     constructor() {
@@ -48,25 +48,6 @@ class TaskState {
         this.displayedTask = null
     }
 
-    setDraggableTask(task: Task) {
-        const foundTask = this.tasks.find(item => item.id === task.id)
-        if (foundTask) {
-            this.draggableTask = foundTask
-        }
-    }
-    
-    resetDraggableTask() {
-        this.draggableTask = null
-    }
-    
-    changeDateAtDraggableTask({ task, date }: Draggable) {
-        this.tasks.forEach(item => {
-            if (item.id === task.id) {
-                item.date = date
-            }
-        })
-    }
-    
     setActionMessage(message: string) {
         this.actionMessage = message
     }
@@ -107,11 +88,6 @@ class TaskState {
                 this.setActionMessage(TASK_NOT_UPDATED)
             }            
         }
-
-    updateDraggableTask(draggable: Draggable) {
-        this.changeDateAtDraggableTask(draggable)
-        this.setDraggableTask(draggable.task)
-    }
 }
 
 export const taskState = new TaskState()

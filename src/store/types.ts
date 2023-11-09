@@ -3,7 +3,7 @@ import { modalState } from "../store-mobx/modal-store"
 
 export type Dates = {startDate: string, endDate: string}
 
-export type UpdateTask = {
+export type UpdatedTask = {
     id: number
     task: Task
 }

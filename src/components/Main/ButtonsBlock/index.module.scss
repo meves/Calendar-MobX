@@ -16,6 +16,7 @@
         color: var(--white);
         background-color: var(--black01);        
         transition: all 0.2s ease-out;
+        font-family: inherit;
 
         &:hover {
             cursor: pointer;

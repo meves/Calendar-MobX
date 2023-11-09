@@ -49,7 +49,8 @@
                     padding: 16px;
                     border-radius: 8px;
                     border: 1px solid var(--grey);
-                    color: var(--black);                    
+                    color: var(--black);
+                    font-family: inherit;
                 }
 
                 .select {
@@ -57,6 +58,7 @@
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
+                    font-family: inherit;
                 }
     
                 .textarea {
@@ -64,6 +66,7 @@
                     border-radius: 8px;
                     padding: 16px;
                     border: 1px solid var(--grey);
+                    font-family: inherit;
                 }
 
                 .error {
@@ -100,6 +103,7 @@
                     border: none;
                     color: var(--white);
                     background-color: var(--blue);
+                    font-family: inherit;
                     transition: all 0.2s ease-out;
     
                     &:hover {

@@ -86,7 +86,8 @@
                 border: none;
                 outline: none;
                 color: var(--white);
-                background-color: var(--blue);        
+                background-color: var(--blue);
+                font-family: inherit;
                 transition: all 0.2s ease-out;
 
                 &:hover {

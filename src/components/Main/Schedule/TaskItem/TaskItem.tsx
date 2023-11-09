@@ -6,10 +6,10 @@ import { AppContext } from "../../../../store-mobx/context";
 
 export const TaskItem = observer(({
     task,
-    draggableTaskItem
+    draggableTask
 } : {
     task: Task
-    draggableTaskItem: MutableRefObject<Task | undefined>
+    draggableTask: MutableRefObject<Task | undefined>
 }) => {
     const {
         taskState: { setDisplayedTask, resetActionMessage },
@@ -27,7 +27,7 @@ export const TaskItem = observer(({
     }, [task])
 
     const handleOnDragStart = useCallback((event: DragEvent<HTMLDivElement>, task: Task) => {
-        draggableTaskItem.current = task
+        draggableTask.current = task
     }, [task])
 
     return (

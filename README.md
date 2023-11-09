@@ -1,6 +1,7 @@
 # Проект Календарь
 
 Проект выполнен с помощью TS, React, MobX, React Query, axios, SASS modules, Mantine, AG GRID
+
 Проект собран с помощью сборщика webpack
 
 ## Инструкция по запуску

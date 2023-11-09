@@ -4,6 +4,7 @@ import { App } from './App/App';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.scss'
 import { AppProvider } from './App/AppProvider';
+import { MantineProvider } from '@mantine/core';
 
 if (!new class { x }().hasOwnProperty('x')) throw new Error('Transpiler is not configured correctly');
 
@@ -13,7 +14,14 @@ const root = ReactDOM.createRoot(
 root.render(    
     <AppProvider>
         <BrowserRouter>
-            <App /> 
+            <MantineProvider
+                withGlobalStyles withNormalizeCSS
+                theme={{
+                    fontFamily: 'Roboto, sans-serif'
+                }}
+            >
+                <App /> 
+            </MantineProvider>
         </BrowserRouter>
     </AppProvider>    
 );

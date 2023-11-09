@@ -1,5 +1,5 @@
 import { Task, TasksData } from "./types"
-import { Dates, UpdateTask } from "../store/types"
+import { Dates, UpdatedTask } from "../store/types"
 import { instance } from './index'
 
 export const taskApi = {
@@ -28,7 +28,7 @@ export const taskApi = {
             throw new Error(error.response)
         }
     },
-    async updateTask({ id, task }: UpdateTask) {
+    async updateTask({ id, task }: UpdatedTask) {
         try {
             const response = await instance.put<Task>(`tasks/${id}`, task)
             return response.data

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext } from "react";
 import styles from './index.module.scss'
 import classNames from "classnames";
 import { AppContext } from "../../../../store-mobx/context";
@@ -6,20 +6,17 @@ import { Loader } from "../../../shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
-import { UpdateTask as Updated } from "../../../../store/types";
+import { UpdatedTask } from "../../../../store/types";
 
 export const UpdateTask = observer(() => {
     
     const { 
         modalState: { setModalClose },
-        taskState: { 
-            displayedTask, currentTask, draggableTask, 
-            resetCurrentTask, updateTaskAction, updateTask 
-        }
+        taskState: { displayedTask, currentTask, resetCurrentTask, updateTaskAction }
     } = useContext(AppContext)
 
     const { mutate, isPending, isError } = useMutation({
-        mutationFn: ({ id, task }: Updated) => taskApi.updateTask({id, task})
+        mutationFn: ({ id, task }: UpdatedTask) => taskApi.updateTask({id, task})
     })
 
     const handleCancelUpdateOnClick = useCallback(() => {
@@ -48,12 +45,6 @@ export const UpdateTask = observer(() => {
             }
             setModalClose('submit-update')
     }, [displayedTask, currentTask, isError])
-
-    useEffect(() => {
-        if (draggableTask) {
-            updateTask({ ...draggableTask, id: draggableTask.id as number })
-        }
-    }, [draggableTask])
 
     if (isPending) return <Loader/>
 

@@ -4,6 +4,7 @@ import { HomePage } from "../pages/HomePage/HomePage";
 import { withSuspense } from "./hoc/withSuspense";
 import { AppContext } from "../store-mobx/context";
 import { observer } from "mobx-react-lite";
+import { MyPage } from "../pages/MyPage";
 
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const NotFoundPage = lazy(() => import("../pages/ErrorPages/NotFounPage"));
@@ -16,6 +17,7 @@ export const AppRouter = observer(() => {
         <Routes>
             <Route path="/" element={isAuth ? <HomePage/> : withSuspense(LoginPage)}/>
             <Route path="/login" element={withSuspense(LoginPage)}/>
+            <Route path="/my" element={<MyPage/>}/>
             <Route path="/error" element={withSuspense(ErrorPage)} />
             <Route path="/*" element={withSuspense(NotFoundPage)}/>
         </Routes>
