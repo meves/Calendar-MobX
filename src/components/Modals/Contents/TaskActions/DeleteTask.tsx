@@ -1,15 +1,14 @@
-import React, { useCallback, useContext } from "react";
-import styles from './index.module.scss'
-import classNames from "classnames";
-import { AppContext } from "../../../../store-mobx/context";
+import React, { MouseEvent, useCallback, useContext } from "react";
+import { AppContext } from "../../../../store/context";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { Loader } from "../../../shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
+import { TaskAction } from "./TaskAction";
 
 export const DeleteTask = observer(() => {
     const { 
-        taskState: { displayedTask, resetDisplayedTask, deleteTaskAction },
+        taskState: { displayedTask, deleteTaskAction },
         modalState: { setModalClose }
     } = useContext(AppContext)
 
@@ -17,9 +16,12 @@ export const DeleteTask = observer(() => {
         mutationFn: (id: number) => taskApi.deleteTask(id)
     })
 
-    const handleCancelDeleteOnClick = useCallback(() => {
-        resetDisplayedTask()
+    const handleCancelDeleteOnClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+        event.nativeEvent.stopImmediatePropagation()
         setModalClose('submit-delete')
+        document.body.onclick = function() {
+            setModalClose('task-data')
+        }
     }, [])
 
     const handleDeleteTaskOnClick = useCallback(async () => {
@@ -27,32 +29,18 @@ export const DeleteTask = observer(() => {
             mutate(displayedTask.id)
             deleteTaskAction(displayedTask.id, !isError)
             setModalClose('submit-delete')
+            setModalClose('task-data')
         }
     }, [displayedTask, displayedTask?.id])
 
     if (isPending) return <Loader/>
 
     return (
-        <div className={styles.wrapper}>
-            <h2 
-                className={styles.title}
-            >Подтвердите удаление задачи
-            </h2>
-            <div className={styles.buttons}>
-                <button
-                    className={classNames(styles.button, styles.cancel)}
-                    onClick={handleCancelDeleteOnClick}
-                    type="button"
-                >Отмена
-                </button>
-                <button
-                    className={classNames(styles.button, styles.create)}
-                    onClick={handleDeleteTaskOnClick}
-                    type="button"
-                >Удалить
-                </button>
-            </div>
-        </div>
+        <TaskAction
+            type="delete"
+            cancelHandler={handleCancelDeleteOnClick}
+            actionHandler={handleDeleteTaskOnClick}
+        />
     )
 })
 

@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
-import { AppContext, appState } from "../store-mobx/context";
+import { AppContext, appState } from "../../store/context";
+import makeInspectable from 'mobx-devtools-mst';
 
+makeInspectable(appState)
 
 export const AppProvider = ({
     children
@@ -13,3 +15,5 @@ export const AppProvider = ({
         </AppContext.Provider>
     )
 }
+// @ts-ignore
+window.appState = appState

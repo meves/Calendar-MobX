@@ -9,14 +9,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { observer } from "mobx-react-lite";
 import { Loader } from "../shared/Loader/Loader";
-import { AppContext } from "../../store-mobx/context";
+import { AppContext } from "../../store/context";
+import { Button, ColorScheme } from "@mantine/core";
 
 const initialState = { login: '', password: '' }
 
 export const LoginForm = observer(() => {
     const navigate = useNavigate()
 
-    const authState = useContext(AppContext).authState
+    const { authState, uiState: { colorTheme }} = useContext(AppContext)
 
     const notify = (message: string) => toast(message)
 
@@ -62,7 +63,7 @@ export const LoginForm = observer(() => {
     return (
         <>
         <form 
-            className={styles.form}
+            className={`${styles.form} ${colorTheme === 'dark' ? styles.formDark : ''}`}
             onSubmit={handleSubmitForm}    
         >
             <legend className={styles.legend}>
@@ -87,7 +88,10 @@ export const LoginForm = observer(() => {
                         onChange={handleInputOnChange}
                         autoComplete="username"
                     />
-                    <div className={styles.error}>{errors.login}</div>
+                    <ErrorMessage 
+                        message={errors.login}
+                        colorTheme={colorTheme}
+                    />
                 </div>
 
                 <div className={styles.inputWrapper}>
@@ -106,13 +110,17 @@ export const LoginForm = observer(() => {
                         onChange={handleInputOnChange}
                         autoComplete="current-password"                    
                     />
-                    <div className={styles.error}>{errors.password}</div>
+                    <ErrorMessage 
+                        message={errors.password}
+                        colorTheme={colorTheme}
+                    />
                 </div>
-                <button
+                <Button
                     className={styles.submitButton}
                     type="submit"
+                    variant="default"
                 >Войти
-                </button>
+                </Button>
             </fieldset>
         </form>
         <ToastContainer 
@@ -129,3 +137,18 @@ export const LoginForm = observer(() => {
 })
 
 LoginForm.displayName = "LoginForm"
+
+const ErrorMessage = ({
+    message,
+    colorTheme
+} : {
+    message: string
+    colorTheme: ColorScheme
+}) => {
+    return (
+        <div 
+            className={`${styles.error} ${colorTheme === 'dark' ? styles.errorDark : ''}`}
+        >{message}
+        </div>
+    )
+}

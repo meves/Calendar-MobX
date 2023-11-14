@@ -2,8 +2,10 @@
 // Please do not change this file!
 interface CssExports {
   'error': string;
+  'errorDark': string;
   'fieldset': string;
   'form': string;
+  'formDark': string;
   'input': string;
   'inputWrapper': string;
   'label': string;

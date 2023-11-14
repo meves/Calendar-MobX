@@ -1,12 +1,11 @@
 import React, { useCallback, useContext, useEffect } from "react";
-import styles from './index.module.scss'
-import classNames from "classnames";
 import { Task } from "../../../../rest-api/types";
 import { Loader } from "../../../shared//Loader/Loader";
-import { AppContext } from "../../../../store-mobx/context";
+import { AppContext } from "../../../../store/context";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { observer } from "mobx-react-lite";
+import { TaskAction } from "./TaskAction";
 
 export const CreateTask = observer(() => {
     const { 
@@ -18,11 +17,11 @@ export const CreateTask = observer(() => {
         mutationFn: async (currentTask: Task) => taskApi.createTask(currentTask)
     })
 
-    const handleCancelOnClick = useCallback(() => {
+    const handleCancelCreateOnClick = useCallback(() => {
         setModalClose('submit-create')
     }, [])
 
-    const handleCreateOnClick = useCallback(async () => {
+    const handleCreateTaskOnClick = useCallback(async () => {
         if (currentTask) {            
             mutate(currentTask)
         }
@@ -41,27 +40,11 @@ export const CreateTask = observer(() => {
     if (isPending) return <Loader/>
 
     return (
-        <div className={styles.wrapper}>
-            <h2 
-                className={styles.title}
-            >Подтвердите создание новой задачи
-            </h2>
-            <p>{}</p>
-            <div className={styles.buttons}>
-                <button
-                    className={classNames(styles.button, styles.cancel)}
-                    onClick={handleCancelOnClick}
-                    type="button"
-                >Отмена
-                </button>
-                <button
-                    className={classNames(styles.button, styles.create)}
-                    onClick={handleCreateOnClick}
-                    type="button"
-                >Создать
-                </button>
-            </div>
-        </div>
+        <TaskAction
+            type="create"
+            cancelHandler={handleCancelCreateOnClick}
+            actionHandler={handleCreateTaskOnClick}
+        />
     )
 })
 

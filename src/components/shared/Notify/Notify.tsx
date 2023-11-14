@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../../../store-mobx/context";
+import { AppContext } from "../../../store/context";
 
 export const Notify = observer(({
     delay=3000

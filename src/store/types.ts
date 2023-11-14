@@ -1,5 +1,5 @@
 import { Task } from "../rest-api/types"
-import { modalState } from "../store-mobx/modal-store"
+import { modalState } from "./modal-state"
 
 export type Dates = {startDate: string, endDate: string}
 

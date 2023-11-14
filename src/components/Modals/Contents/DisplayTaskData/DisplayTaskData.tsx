@@ -4,21 +4,25 @@ import {
     displayTaskType, getDateToDisplayTask, getFullNameOfWeekDay 
 } from "../../../utils";
 import classNames from "classnames";
-import { AppContext } from "../../../../store-mobx/context";
+import { AppContext } from "../../../../store/context";
 import { observer } from "mobx-react-lite";
+import { Button } from "@mantine/core";
 
 export const DisplayTaskData = observer(() => {
     const { 
         modalState: { setModalOpen, setModalClose },
-        taskState: { displayedTask }
+        taskState: { displayedTask },
+        uiState: { colorTheme }
     } = useContext(AppContext)
     
     const handleUpdateTaskOnClick = useCallback(() => {
         setModalOpen('new-task')
+        document.body.onclick = null
     }, [])
 
     const handleDeleteTaskOnClick = useCallback(() => {
         setModalOpen('submit-delete')
+        document.body.onclick = null
     }, [])
 
     const handleArticleOnClick = useCallback((
@@ -34,7 +38,7 @@ export const DisplayTaskData = observer(() => {
 
     return (
         <article 
-            className={styles.wrapper}
+            className={`${styles.wrapper} ${colorTheme === 'dark' ? styles.dark : ''}`}
             onClick={handleArticleOnClick}  
         >
             <div 
@@ -65,18 +69,18 @@ export const DisplayTaskData = observer(() => {
                     </span>
                 </div>
                 <div className={styles.buttons}>
-                    <button
+                    <Button
                         className={styles.button}
                         onClick={handleUpdateTaskOnClick}
                     >
                         Изменить задачу
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         className={classNames(styles.button, styles.deleteButton)}
                         onClick={handleDeleteTaskOnClick}
                     >
                         Удалить задачу
-                    </button>
+                    </Button>
                 </div>
             </section>                    
         </article>

@@ -1,5 +1,5 @@
 import React, { 
-    ChangeEvent, FormEvent, useCallback, useContext, useEffect, useState 
+    ChangeEvent, FormEvent, MouseEvent, useCallback, useContext, useEffect, useState 
 } from "react";
 import styles from './index.module.scss'
 import { REQUIRED } from "../../../Login/libs/constants";
@@ -8,17 +8,32 @@ import { InputName } from "../../../Login/libs/types";
 import { displayError } from "../../../Login/libs/displayError";
 import classNames from "classnames";
 import { TaskTypes } from "../../../Login/libs/enum";
-import { AppContext } from "../../../../store-mobx/context";
+import { AppContext } from "../../../../store/context";
 import { observer } from "mobx-react-lite";
+import { Button, NativeSelect } from "@mantine/core";
+import { IconChevronDown } from '@tabler/icons-react';
 
 const initialState = {name: '', description: '', date: '', type: ''}
 const initialErrors = {name: '', description: '', date: '', type: ''}
 
+const selectValues = {
+    [TaskTypes.Current]: 1,
+    [TaskTypes.Important]: 2,
+    [TaskTypes.Urgent]: 3
+}
+
+const typeToString = {
+    1: TaskTypes.Current,
+    2: TaskTypes.Important,
+    3: TaskTypes.Urgent
+}
+
 export const AddNewtask = observer(() => {
     
     const { 
-        taskState: { displayedTask, resetCurrentTask, resetDisplayedTask, setCurrentTask },
-        modalState: { setModalClose, setModalOpen }
+        taskState: { displayedTask, setCurrentTask },
+        modalState: { setModalClose, setModalOpen },
+        uiState: { colorTheme }
     } = useContext(AppContext)
     
     const [errors, setErrors] = useState(initialErrors)
@@ -42,7 +57,9 @@ export const AddNewtask = observer(() => {
     const handleAddTaskNameOnChange = useCallback((
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
-        const { name, value } = event.currentTarget
+        let { name, value: inputValue } = event.currentTarget
+        const value: number | string = name === 'type' ? selectValues[inputValue] : inputValue
+        
         setInputState(prev => ({...prev, [name]: value}))
         if (value) {
             setErrors(prev => ({...prev, [name]: ''}))
@@ -51,12 +68,14 @@ export const AddNewtask = observer(() => {
         }
     }, [])
 
-    const handleCloseFormOnClick = useCallback(() => {
-        resetCurrentTask()
-        resetDisplayedTask()
+    const handleCloseFormOnClick = useCallback((event: MouseEvent) => {
+        event.nativeEvent.stopImmediatePropagation()
         setErrors(initialErrors)
         setInputState(initialState)
         setModalClose('new-task')
+        document.body.onclick = function() {
+            setModalClose('task-data')
+        }
     }, [initialErrors, initialState])
     
     const handleOnSubmitForm = useCallback((event: FormEvent<HTMLFormElement>) => {
@@ -65,6 +84,7 @@ export const AddNewtask = observer(() => {
         for (let entry of Object.entries(inputState)) {
             const name = entry[0] as InputName
             const value = entry[1]
+            
             if (!value && name !== 'description') {
                 return setErrors(prev => ({...prev, [name]: REQUIRED}))
             }
@@ -72,12 +92,11 @@ export const AddNewtask = observer(() => {
                 return setErrors(prev => ({...prev, [name]: displayError(name)}))
             }
         }
-
         setCurrentTask({
             name: inputState.name,
             description: inputState.description || null,
             date: inputState.date,
-            type: Number(inputState.type),
+            type: +inputState.type,
             tags: []
         })
         
@@ -88,7 +107,10 @@ export const AddNewtask = observer(() => {
 
     return (
         <div className={styles.wrapper}>
-            <form className={styles.form} onSubmit={handleOnSubmitForm}>
+            <form 
+                className={`${styles.form} ${colorTheme === 'dark' ? styles.dark : ''}`} 
+                onSubmit={handleOnSubmitForm}
+            >
 
                 <fieldset className={styles.fieldset}>
                     <legend className={styles.legend}>{displayedTask ? 'Изменить ' : 'Создать '}задачу</legend>
@@ -137,33 +159,43 @@ export const AddNewtask = observer(() => {
 
                     <div className={styles.inputWrapper}>
                         <label className={styles.label} htmlFor="type">Выберите тип</label>
-                        <select 
-                            className={classNames(styles.input, styles.select)}
+                        <NativeSelect 
                             name="type" 
                             id="type"
-                            value={inputState.type}
+                            value={typeToString[inputState.type]}
                             onChange={handleAddTaskNameOnChange}
-                        >
-                            <option>Выберите из списка</option>
-                            <option value="1">{TaskTypes.Current}</option>
-                            <option value="2">{TaskTypes.Important}</option>
-                            <option value="3">{TaskTypes.Urgent}</option>
-                        </select>
+                            data={["Выберите из списка", TaskTypes.Current, TaskTypes.Important, TaskTypes.Urgent]}
+                            rightSection={<IconChevronDown size="1rem" />}
+                            rightSectionWidth={40}
+                            variant="default"
+                            size="lg"
+                            styles={{
+                                root: {
+                                    width: '100%',
+                                    height: '56px',
+                                    border: (colorTheme === 'dark') ? 'none' : '1px solid #000',
+                                    outline: 'none',
+                                    borderRadius: '8px'
+                                }
+                            }}
+                        />
                         <div className={styles.error}>{errors.type ?? errors.type}</div>
                     </div>
 
                     <div className={styles.buttons}>
-                        <button
+                        <Button
                             className={classNames(styles.cancel, styles.button)}
                             onClick={handleCloseFormOnClick}
-                            type="reset"
+                            type="button"
+                            variant="outline"
                         >Закрыть окно
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             className={styles.button}
                             type="submit"
+                            variant="filled"
                         >{displayedTask ? 'Изменить ' : 'Создать '}задачу
-                        </button>
+                        </Button>
                     </div>
                 </fieldset>
             </form>

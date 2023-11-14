@@ -1,5 +1,5 @@
 import { StatusCodes } from "../rest-api/status-codes"
-import { BAD_REQUEST_400, NOT_AUTHORIZED_401, NOT_FOUND_404, SERVER_ERROR_500, FORBIDDEN_403 } from "../store/constants"
+import { BAD_REQUEST_400, NOT_AUTHORIZED_401, NOT_FOUND_404, SERVER_ERROR_500, FORBIDDEN_403 } from "./constants"
 
 export const getErrorMessage = (code: StatusCodes) => {
     switch (code) {

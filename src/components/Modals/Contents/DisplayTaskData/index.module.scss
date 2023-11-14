@@ -8,7 +8,6 @@
     gap: 24px;
     background-color: var(--white);
     border-radius: 10px;
-    border: 2px solid var(--light-grey02);
     position: relative;
 
     .cross {
@@ -50,7 +49,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 8px 16px;
+                padding: 4px 16px;
                 border-radius: 8px;
                 color: var(--white);
 
@@ -81,12 +80,9 @@
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 1.3;
-                padding: 12px 32px;
                 border-radius: 10px;
                 border: none;
                 outline: none;
-                color: var(--white);
-                background-color: var(--blue);
                 font-family: inherit;
                 transition: all 0.2s ease-out;
 
@@ -109,4 +105,9 @@
             }
         }
     }
+}
+
+.dark {
+    background-color: var(--black01);
+    border: 1px solid var(--light-grey);
 }

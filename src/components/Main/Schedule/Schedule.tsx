@@ -13,7 +13,7 @@ import ErrorPage from "../../../pages/ErrorPages/ErrorPage";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { taskApi } from "../../../rest-api/task-api";
 import { Dates, UpdatedTask } from "../../../store/types";
-import { AppContext } from "../../../store-mobx/context";
+import { AppContext } from "../../../store/context";
 import { observer } from "mobx-react-lite";
 
 export const Schedule = observer(({
@@ -25,7 +25,10 @@ export const Schedule = observer(({
     endDate: string
     currentDate: Date
 }) => {
-    const { tasks, setTasks, updateTaskAction   } = useContext(AppContext).taskState
+    const { 
+        taskState: { tasks, setTasks, updateTaskAction },
+        uiState: { colorTheme }
+    } = useContext(AppContext)
 
     const { isPending: isPendingGetTasks, isError, data } = useQuery({
         queryKey: ['tasks', {startDate, endDate}], 
@@ -51,8 +54,8 @@ export const Schedule = observer(({
 
     const handleDragEnd = useCallback((event: DragEvent<HTMLDivElement>) => {
         event.currentTarget.draggable = true
-        event.currentTarget.style.backgroundColor = '#fff'
-    }, [])
+        event.currentTarget.style.backgroundColor = colorTheme === 'dark' ? '#1d1e30' : '#fff'
+    }, [colorTheme])
 
     const handleOnDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
         event.preventDefault()
@@ -66,17 +69,17 @@ export const Schedule = observer(({
     }, [])
 
     const handleOnDragLeave = useCallback((event: DragEvent<HTMLDivElement>) => {
-        event.currentTarget.style.backgroundColor = '#fff'
-    }, [])
+        event.currentTarget.style.backgroundColor = colorTheme === 'dark' ? '#1d1e30' : '#fff'
+    }, [colorTheme])
 
     const handleOnDrop = useCallback(async (event: DragEvent<HTMLDivElement>, date: string) => {
         event.preventDefault()
-        event.currentTarget.style.backgroundColor = '#fff'
-        if (draggableTask.current?.id) {
+        event.currentTarget.style.backgroundColor = colorTheme === 'dark' ? '#1d1e30' : '#fff'
+        if (draggableTask.current?.id && (draggableTask.current?.date !== date)) {
             draggableTask.current = {...draggableTask.current, date}
             mutate({id: draggableTask.current.id as number, task: draggableTask.current})
         }
-    }, [draggableTask.current])
+    }, [draggableTask.current, colorTheme])
     
     useEffect(() => {
         if (!isPendingUpdate && draggableTask.current) {

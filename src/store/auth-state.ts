@@ -1,10 +1,10 @@
 import { makeAutoObservable } from "mobx"
-import { tokenIsAlive, deleteFromLocalStorage, getFromLocalStorage, saveToLocalStorage } from "../store/local-storage/utils"
+import { tokenIsAlive, deleteFromLocalStorage, getFromLocalStorage, saveToLocalStorage } from "./local-storage/utils"
 import { LoginData, SavedToken } from "../rest-api/types"
-import { TOKEN } from "../store/local-storage/constants"
+import { TOKEN } from "./local-storage/constants"
 import { authApi } from "../rest-api/auth-api"
 import { StatusCodes } from "../rest-api/status-codes"
-import { Status } from "../store/types"
+import { Status } from "./types"
 import { getErrorMessage } from "./utils"
 
 class AuthState {

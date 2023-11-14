@@ -1,14 +1,17 @@
-import { makeAutoObservable } from "mobx"
+import { action, flow, makeAutoObservable, makeObservable, override } from "mobx"
 import { Task } from "../rest-api/types"
 import { 
     TASK_CREATED, TASK_DELETED, TASK_NOT_CREATED, TASK_NOT_DELETED, TASK_NOT_UPDATED, TASK_UPDATED 
-} from "../store/constants"
+} from "./constants"
+import { Dates } from "./types"
+import { taskApi } from "../rest-api/task-api"
 
 class TaskState {
     tasks: Task[] = []
     currentTask: Task | null = null
     displayedTask: Task | null = null
     actionMessage: string = ''
+    status: 'init' | 'pending' | 'error' | 'success' = 'init'
     
     constructor() {
         makeAutoObservable(this, {}, {autoBind: true})
@@ -56,12 +59,23 @@ class TaskState {
         this.actionMessage = ''
     }
 
+    fetchTasks = flow(function* ({ startDate, endDate }: Dates) {
+        this.status = 'pending'
+        try {
+            const data = yield taskApi.getTasks({startDate, endDate})            
+            this.status = 'success'
+            this.tasks = data.result
+            this.setActionMessage("Задачи обновлены")
+        } catch (error: any) {
+            this.status = 'error'
+            this.setActionMessage("Не удалось загрузить задачи")
+        }
+    })
+
     createTaskAction(task: Task, isSuccess: boolean) {
         if (isSuccess) {
             this.addTask(task)
-            this.resetCurrentTask()
-            this.resetDisplayedTask()
-            this.setActionMessage(TASK_CREATED)
+            this.resetTaskAction(TASK_CREATED)
         }
         else {
             this.setActionMessage(TASK_NOT_CREATED)
@@ -81,13 +95,17 @@ class TaskState {
     updateTaskAction(task: Task, isSuccess: boolean) {
             if (isSuccess) {
                 this.updateTask(task)
-                this.resetCurrentTask()
-                this.resetDisplayedTask()
-                this.setActionMessage(TASK_UPDATED)
+                this.resetTaskAction(TASK_UPDATED)
             } else {
                 this.setActionMessage(TASK_NOT_UPDATED)
             }            
         }
+
+    resetTaskAction(message: string) {        
+        this.resetCurrentTask()
+        this.resetDisplayedTask()
+        this.setActionMessage(message)
+    }
 }
 
 export const taskState = new TaskState()

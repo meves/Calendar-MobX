@@ -4,6 +4,7 @@ interface CssExports {
   'button': string;
   'buttons': string;
   'cancel': string;
+  'dark': string;
   'error': string;
   'fieldset': string;
   'form': string;
@@ -11,7 +12,6 @@ interface CssExports {
   'inputWrapper': string;
   'label': string;
   'legend': string;
-  'select': string;
   'textarea': string;
   'wrapper': string;
 }

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx"
-import { ModalTypes } from "../store/types"
+import { ModalTypes } from "./types"
 
 class ModalState {    
     modals = {

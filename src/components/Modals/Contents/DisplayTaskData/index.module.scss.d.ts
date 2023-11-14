@@ -5,6 +5,7 @@ interface CssExports {
   'buttons': string;
   'cross': string;
   'current': string;
+  'dark': string;
   'deleteButton': string;
   'important': string;
   'row': string;

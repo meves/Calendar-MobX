@@ -16,7 +16,6 @@
 
     .title {
         width: 100%;
-        color: var(--black01);
         font-weight: 700;
         font-size: 24px;
         line-height: 1.5;
@@ -41,8 +40,6 @@
             line-height: 1.4;
             border: none;
             border-radius: 8px;
-            color: var(--white);
-            background-color: var(--blue);
             font-family: inherit;
             transition: all 0.2s ease-out;
             
@@ -57,16 +54,19 @@
 
         .cancel {
             border: 1px solid var(--black01);
-            background-color: var(--transparent);
-            color: var(--black01);
-
+            
             &:hover {
                 background-color: var(--light-grey);
             }
         }
 
-        .create:hover {
+        .action:hover {
             background-color: var(--blue-hover);
         }
     }
+}
+
+.dark{
+    background-color: var(--black01);
+    border: 1px solid var(--light-grey);
 }

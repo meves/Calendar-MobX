@@ -2,7 +2,7 @@ import React, { DragEvent, MouseEvent, MutableRefObject, useCallback, useContext
 import styles from './index.module.scss'
 import { Task } from "../../../../rest-api/types";
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../../../../store-mobx/context";
+import { AppContext } from "../../../../store/context";
 
 export const TaskItem = observer(({
     task,
@@ -13,7 +13,8 @@ export const TaskItem = observer(({
 }) => {
     const {
         taskState: { setDisplayedTask, resetActionMessage },
-        modalState: { setModalOpen, setModalClose }
+        modalState: { setModalOpen, setModalClose },
+        uiState: { colorTheme }
     } = useContext(AppContext)
 
     const handleDisplyTaskOnClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
@@ -32,7 +33,7 @@ export const TaskItem = observer(({
 
     return (
         <div 
-            className={styles.wrapper}
+            className={`${styles.wrapper} ${colorTheme === 'dark' ? styles.dark : ''}`}
             onClick={handleDisplyTaskOnClick}
             draggable="true"
             onDragStart={event => handleOnDragStart(event, task)}

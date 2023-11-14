@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { AppRouter } from "./Router";
+import { AppRouter } from "./AppRouter/AppRouter";
 import styles from './App.module.scss'
 import { Loader } from "../components/shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../store-mobx/context";
+import { AppContext } from "../store/context"; 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const App = observer(() => {

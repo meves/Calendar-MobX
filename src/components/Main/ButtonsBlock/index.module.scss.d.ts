@@ -3,7 +3,9 @@
 interface CssExports {
   'addTask': string;
   'arrow': string;
+  'btnGroup': string;
   'button': string;
+  'dark': string;
   'today': string;
   'wrapper': string;
 }

@@ -13,7 +13,7 @@ const isDevelopment = process.env.MODE === 'development';
 console.log(`${isDevelopment ? 'development' : 'production'}`);
 const dotenvFilename = isDevelopment ? '.env.development' : '.env.production';
 
-const optimize = () => {
+function optimize() {
     const config = {
         splitChunks: {
             chunks: 'async',
@@ -35,12 +35,12 @@ const optimize = () => {
                     reuseExistingChunk: true,
                 }
             }
-        }        
-    }
+        }
+    };
     if (!isDevelopment) {
         config.minimize = true,
-        config.minimizer = [new TerserWebpackPlugin(), new CssMinimizerPlugin()]
-    } 
+            config.minimizer = [new TerserWebpackPlugin(), new CssMinimizerPlugin()];
+    }
     return config;
 }
 
@@ -100,7 +100,8 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.REACT_APP_MODE': JSON.stringify(process.env.MODE),
-            'process.env.REACT_APP_BASE_URL': JSON.stringify(process.env.BASE_URL)
+            'process.env.REACT_APP_BASE_URL': JSON.stringify(process.env.BASE_URL),
+            'process.env.REACT_APP_PORT': JSON.stringify(process.env.PORT),
         }),
         new Dotenv({
             path: dotenvFilename,

@@ -1,12 +1,14 @@
 import { createContext } from "react";
-import { authState } from "./auth-store";
-import { modalState } from "./modal-store";
-import { taskState } from "./task-store";
+import { authState } from "./auth-state";
+import { modalState } from "./modal-state";
+import { taskState } from "./task-state";
+import { uiState } from "./ui-state";
 
 export const appState = {
     authState,
     modalState,
-    taskState
+    taskState,
+    uiState
 }
 
 type AppState = typeof appState

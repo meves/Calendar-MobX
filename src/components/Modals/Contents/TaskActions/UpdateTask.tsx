@@ -1,12 +1,11 @@
 import React, { useCallback, useContext } from "react";
-import styles from './index.module.scss'
-import classNames from "classnames";
-import { AppContext } from "../../../../store-mobx/context";
+import { AppContext } from "../../../../store/context";
 import { Loader } from "../../../shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { UpdatedTask } from "../../../../store/types";
+import { TaskAction } from "./TaskAction";
 
 export const UpdateTask = observer(() => {
     
@@ -40,33 +39,19 @@ export const UpdateTask = observer(() => {
             }
             mutate(updatedTask)
             updateTaskAction({...updatedTask.task, id: displayedTask.id}, !isError)}
-            if (!isError) {
-                setModalClose('new-task')
-            }
             setModalClose('submit-update')
-    }, [displayedTask, currentTask, isError])
+            setModalClose('new-task')
+            setModalClose('task-data')
+    }, [displayedTask, currentTask])
 
     if (isPending) return <Loader/>
 
     return (
-        <div className={styles.wrapper}>
-            <h2 
-                className={styles.title}
-            >Подтвердите обновление задачи
-            </h2>
-            <div className={styles.buttons}>
-                <button
-                    className={classNames(styles.button, styles.cancel)}
-                    onClick={handleCancelUpdateOnClick}
-                >Отмена
-                </button>
-                <button
-                    className={classNames(styles.button, styles.create)}
-                    onClick={handleUpdateTaskOnClick}
-                >Обновить
-                </button>
-            </div>
-        </div>
+        <TaskAction
+            type="update"
+            cancelHandler={handleCancelUpdateOnClick}
+            actionHandler={handleUpdateTaskOnClick}
+        />
     )
 })
 

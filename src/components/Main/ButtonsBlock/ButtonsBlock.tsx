@@ -4,9 +4,11 @@ import classNames from "classnames";
 import { dayDuration } from "../../utils/constants";
 import { Diapason } from "../../utils/types";
 import { getStartEndDates } from "../../utils/getStartEndDates";
-import { AppContext } from "../../../store-mobx/context";
+import { AppContext } from "../../../store/context";
+import { Button } from "@mantine/core";
+import { observer } from "mobx-react-lite";
 
-export const ButtonsBlock = ({
+export const ButtonsBlock = observer(({
     startDate,
     setDates
 } : {
@@ -15,6 +17,7 @@ export const ButtonsBlock = ({
 }) => {
     const { setModalOpen } = useContext(AppContext).modalState
     const { resetDisplayedTask } = useContext(AppContext).taskState
+    const { colorTheme } = useContext(AppContext).uiState
 
     const handleSetPrevDateOnclick = useCallback(() => {
         const prevStartDate = new Date(new Date(startDate).getTime() - dayDuration*6)
@@ -39,30 +42,39 @@ export const ButtonsBlock = ({
     }, [])
 
     return (
-        <div className={styles.wrapper}>
-            <button
-                className={classNames(styles.button, styles.arrow)}
-                onClick={handleSetPrevDateOnclick}
-            >{`<`}
-            </button>
-            
-            <button
-                className={classNames(styles.button, styles.today)}
-                onClick={handleSetTodayOnClick}
-            >{`Сегодня`}
-            </button>
-            
-            <button
-                className={classNames(styles.button, styles.arrow)}
-                onClick={handleSetNextDateOnclick}
-            >{`>`}
-            </button>
-            
-            <button
+        <div  className={styles.wrapper}>
+            <Button.Group 
+                className={styles.btnGroup}
+            >
+                <button
+                    className={`${styles.button} ${styles.arrow} ${colorTheme === 'dark' ? styles.dark : ''}`}
+                    onClick={handleSetPrevDateOnclick}
+                >{`<`}
+                </button>
+                
+                <Button
+                    className={`${styles.button} ${styles.today} ${colorTheme === 'dark' ? styles.dark : ''}`}
+                    onClick={handleSetTodayOnClick}
+                    variant="filled"
+                >{`Сегодня`}
+                </Button>
+                
+                <Button
+                    className={`${styles.button} ${styles.arrow} ${colorTheme === 'dark' ? styles.dark : ''}`}
+                    onClick={handleSetNextDateOnclick}
+                    variant="filled"
+                >{`>`}
+                </Button>
+            </Button.Group>
+                
+            <Button
                 className={classNames(styles.button, styles.addTask)}
                 onClick={handleAddNewTaskOnClick}
+                variant="filled"
             >{`Добавить задачу`}
-            </button>
+            </Button>
         </div>
     )
-}
+})
+
+ButtonsBlock.displayName = "ButtonsBlock"

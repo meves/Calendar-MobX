@@ -7,7 +7,7 @@ import {
     ModalWrapper, AddNewtask 
 } from "../../components/Modals/";
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../../store-mobx/context";
+import { AppContext } from "../../store/context";
 
 export const HomePage = observer(() => {
     const {  
