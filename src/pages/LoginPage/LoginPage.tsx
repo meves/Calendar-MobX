@@ -8,7 +8,9 @@ const LoginPage = observer(() => {
     const { colorTheme } = useContext(AppContext).uiState
 
     return (
-        <section className={`${styles.pageWrapper} ${colorTheme === 'dark' ? styles.dark : ''}`}>
+        <section 
+            className={`${styles.pageWrapper} ${colorTheme === 'dark' ? styles.dark : ''}`}
+        >
             <LoginForm />
         </section>
     )

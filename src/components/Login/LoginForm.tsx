@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import { Loader } from "../shared/Loader/Loader";
 import { AppContext } from "../../store/context";
 import { Button, ColorScheme } from "@mantine/core";
+import { ToggleTheme } from "../Header/ToggleTheme/ToggleTheme";
 
 const initialState = { login: '', password: '' }
 
@@ -66,6 +67,9 @@ export const LoginForm = observer(() => {
             className={`${styles.form} ${colorTheme === 'dark' ? styles.formDark : ''}`}
             onSubmit={handleSubmitForm}    
         >
+        <div className={styles.toggleTheme}>
+            <ToggleTheme/>
+        </div>
             <legend className={styles.legend}>
                 Авторизация
             </legend>

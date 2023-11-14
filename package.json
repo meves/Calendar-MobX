@@ -72,7 +72,6 @@
     "classnames": "^2.3.2",
     "fs": "^0.0.1-security",
     "mobx": "^6.10.2",
-    "mobx-devtools-mst": "^0.9.30",
     "mobx-react-lite": "^4.0.5",
     "normalize.css": "^8.0.1",
     "process": "^0.11.10",

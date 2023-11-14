@@ -11,6 +11,7 @@ interface CssExports {
   'label': string;
   'legend': string;
   'submitButton': string;
+  'toggleTheme': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
