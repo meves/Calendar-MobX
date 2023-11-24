@@ -1,17 +1,21 @@
 import { makeAutoObservable } from "mobx"
 import { ModalTypes } from "./types"
+import { RootStore } from "./root-store"
 
-class ModalState {    
+export class ModalStore {    
     modals = {
         'new-task': false,
         'submit-create': false,
         'submit-update': false,
         'submit-delete': false,
-        'task-data': false
+        'task-data': false,
+        'context-menu': false
     }
+    rootStore: RootStore
 
-    constructor() {
+    constructor(rootStore: RootStore) {
         makeAutoObservable(this, {}, {autoBind: true})
+        this.rootStore = rootStore
     }
 
     setModalOpen(modalType: ModalTypes) {
@@ -27,4 +31,4 @@ class ModalState {
     }
 }
 
-export const modalState = new ModalState()
+//export const modalState = new ModalState()

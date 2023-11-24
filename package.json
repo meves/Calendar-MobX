@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "MODE=production webpack --mode production",
-    "start": "MODE=development PORT=3000 webpack-dev-server --mode development --open"
+    "start": "MODE=development PORT=3001 webpack-dev-server --mode development --open"
   },
   "repository": {
     "type": "git",

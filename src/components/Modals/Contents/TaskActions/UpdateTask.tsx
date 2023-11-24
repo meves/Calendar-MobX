@@ -1,19 +1,18 @@
 import React, { useCallback, useContext } from "react";
-import { AppContext } from "../../../../store/context";
 import { Loader } from "../../../shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { UpdatedTask } from "../../../../store/types";
 import { TaskAction } from "./TaskAction";
+import { rootStore } from "../../../../store/root-store";
 
 export const UpdateTask = observer(() => {
     
     const { 
-        modalState: { setModalClose },
-        taskState: { displayedTask, currentTask, resetCurrentTask, updateTaskAction }
-    } = useContext(AppContext)
-
+        modalStore: { setModalClose },
+        taskStore: { displayedTask, currentTask, resetCurrentTask, updateTaskAction }
+    } = rootStore
     const { mutate, isPending, isError } = useMutation({
         mutationFn: ({ id, task }: UpdatedTask) => taskApi.updateTask({id, task})
     })

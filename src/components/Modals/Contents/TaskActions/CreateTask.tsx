@@ -1,17 +1,17 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Task } from "../../../../rest-api/types";
 import { Loader } from "../../../shared//Loader/Loader";
-import { AppContext } from "../../../../store/context";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { observer } from "mobx-react-lite";
 import { TaskAction } from "./TaskAction";
+import { rootStore } from "../../../../store/root-store";
 
 export const CreateTask = observer(() => {
     const { 
-        modalState: { setModalClose },
-        taskState: { currentTask, createTaskAction }
-    } = useContext(AppContext)
+        modalStore: { setModalClose },
+        taskStore: { currentTask, createTaskAction }
+    } = rootStore
 
     const { mutate, isError, isPending, data } = useMutation({
         mutationFn: async (currentTask: Task) => taskApi.createTask(currentTask)

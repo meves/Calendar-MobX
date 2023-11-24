@@ -1,14 +1,14 @@
 import React, { ReactNode, useCallback, useContext, useEffect } from "react";
 import { ColorScheme, ColorSchemeProvider, MantineProvider, rem } from "@mantine/core";
 import { useLocalStorage, useHotkeys } from '@mantine/hooks' 
-import { AppContext } from "../../store/context";
+import { rootStore } from "../../store/root-store";
 
 export const AppStyles = ({
     children
 } : {
     children: ReactNode
 }) => {
-    const { setColorTheme } = useContext(AppContext).uiState
+    const { setColorTheme } = rootStore.uiStore
 
     const [colorSheme, setColorSheme] = useLocalStorage<ColorScheme>({
         key: 'mantine-color-sheme',

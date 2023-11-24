@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App/App';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.scss'
-import { AppProvider } from './App/AppProvider/AppProvider';
 import { AppStyles } from './App/AppStylles/AppStyles';
 
 if (!new class { x }().hasOwnProperty('x')) throw new Error('Transpiler is not configured correctly');
@@ -11,12 +10,10 @@ if (!new class { x }().hasOwnProperty('x')) throw new Error('Transpiler is not c
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 )
-root.render(    
-    <AppProvider>
-        <BrowserRouter>
-            <AppStyles>
-                <App /> 
-            </AppStyles>
-        </BrowserRouter>
-    </AppProvider>    
-);
+root.render(
+    <BrowserRouter>
+        <AppStyles>
+            <App /> 
+        </AppStyles>
+    </BrowserRouter>
+)

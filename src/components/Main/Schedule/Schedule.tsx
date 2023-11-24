@@ -13,8 +13,8 @@ import ErrorPage from "../../../pages/ErrorPages/ErrorPage";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { taskApi } from "../../../rest-api/task-api";
 import { Dates, UpdatedTask } from "../../../store/types";
-import { AppContext } from "../../../store/context";
 import { observer } from "mobx-react-lite";
+import { rootStore } from "../../../store/root-store";
 
 export const Schedule = observer(({
     startDate,
@@ -26,9 +26,9 @@ export const Schedule = observer(({
     currentDate: Date
 }) => {
     const { 
-        taskState: { tasks, setTasks, updateTaskAction },
-        uiState: { colorTheme }
-    } = useContext(AppContext)
+        taskStore: { tasks, setTasks, updateTaskAction },
+        uiStore: { colorTheme }
+    } = rootStore
 
     const { isPending: isPendingGetTasks, isError, data } = useQuery({
         queryKey: ['tasks', {startDate, endDate}], 

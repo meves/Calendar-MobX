@@ -3,13 +3,13 @@ import { AppRouter } from "./AppRouter/AppRouter";
 import styles from './App.module.scss'
 import { Loader } from "../components/shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../store/context"; 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { rootStore } from "../store/root-store";
 
 export const App = observer(() => {
     const { 
         isAuth, status, initializeApp 
-    } = useContext(AppContext).authState
+    } = rootStore.authStore
     
     const queryClient = new QueryClient()
 

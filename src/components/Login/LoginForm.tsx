@@ -9,16 +9,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { observer } from "mobx-react-lite";
 import { Loader } from "../shared/Loader/Loader";
-import { AppContext } from "../../store/context";
 import { Button, ColorScheme } from "@mantine/core";
 import { ToggleTheme } from "../Header/ToggleTheme/ToggleTheme";
+import { rootStore } from "../../store/root-store";
 
 const initialState = { login: '', password: '' }
 
 export const LoginForm = observer(() => {
     const navigate = useNavigate()
 
-    const { authState, uiState: { colorTheme }} = useContext(AppContext)
+    const { authStore, uiStore: { colorTheme }} = rootStore
 
     const notify = (message: string) => toast(message)
 
@@ -47,17 +47,17 @@ export const LoginForm = observer(() => {
             }
         }
         
-        authState.login(inputState)
+        authStore.login(inputState)
             .then(error => {
-                authState.error ? (notify(authState.error)) : navigate('/')
-                authState.error  = ''
+                authStore.error ? (notify(authStore.error)) : navigate('/')
+                authStore.error  = ''
             })
             .catch(error => {
                 navigate('/error')
             })
     }, [inputState])
 
-    if (authState.status === 'loading') {
+    if (authStore.status === 'loading') {
         return <Loader/>
     }
 

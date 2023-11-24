@@ -5,16 +5,19 @@ import {
 } from "./constants"
 import { Dates } from "./types"
 import { taskApi } from "../rest-api/task-api"
+import { RootStore } from "./root-store"
 
-class TaskState {
+export class TaskStore {
     tasks: Task[] = []
     currentTask: Task | null = null
     displayedTask: Task | null = null
     actionMessage: string = ''
     status: 'init' | 'pending' | 'error' | 'success' = 'init'
+    rootStore: RootStore
     
-    constructor() {
+    constructor(rootStore: RootStore) {
         makeAutoObservable(this, {}, {autoBind: true})
+        this.rootStore = rootStore
     }
 
     setTasks(tasks: Task[]) {
@@ -108,4 +111,4 @@ class TaskState {
     }
 }
 
-export const taskState = new TaskState()
+//export const taskState = new TaskState()

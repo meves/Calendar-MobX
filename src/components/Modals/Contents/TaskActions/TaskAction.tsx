@@ -1,8 +1,8 @@
 import React, { MouseEvent, useContext } from "react";
 import styles from './index.module.scss'
 import classNames from "classnames";
-import { AppContext } from "../../../../store/context";
 import { Button } from "@mantine/core";
+import { rootStore } from "../../../../store/root-store";
 
 export const TaskAction = ({
     type,
@@ -13,7 +13,7 @@ export const TaskAction = ({
     cancelHandler: (event: MouseEvent<HTMLButtonElement>) => void
     actionHandler: () => Promise<void>
 }) => {
-    const { colorTheme } = useContext(AppContext).uiState
+    const { colorTheme } = rootStore.uiStore
 
     const action = type === 'create' ? 'создание новой' : type === 'update' ? 'обновление' : 'удаление'
     const btnAction = type === 'create' ? 'Создать' : type === 'update' ? 'Обновить' : 'Удалить'

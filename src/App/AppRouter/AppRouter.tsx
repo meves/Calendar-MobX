@@ -2,15 +2,15 @@ import React, { lazy, useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "../../pages/HomePage/HomePage";
 import { withSuspense } from "../hoc/withSuspense";
-import { AppContext } from "../../store/context";
 import { observer } from "mobx-react-lite";
+import { rootStore } from "../../store/root-store";
 
 const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
 const NotFoundPage = lazy(() => import("../../pages/ErrorPages/NotFounPage"));
 const ErrorPage = lazy(() => import("../../pages/ErrorPages/ErrorPage"));
 
 export const AppRouter = observer(() => {    
-    const isAuth = useContext(AppContext).authState.isAuth
+    const isAuth = rootStore.authStore.isAuth
 
     return (
         <Routes>

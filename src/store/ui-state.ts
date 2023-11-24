@@ -1,11 +1,14 @@
 import { ColorScheme } from "@mantine/core"
 import { makeAutoObservable } from "mobx"
+import { RootStore } from "./root-store"
 
-class UIState {
+export class UIStore {
     colorTheme: ColorScheme
+    rootStore: RootStore
 
-    constructor() {
+    constructor(rootStore: RootStore) {
         makeAutoObservable(this, {}, {autoBind: true})
+        this.rootStore = rootStore
     }
 
     setColorTheme(colorScheme: ColorScheme) {
@@ -13,4 +16,4 @@ class UIState {
     }
 }
 
-export const uiState = new UIState()
+//export const uiState = new UIState()

@@ -1,19 +1,19 @@
-import React, { MouseEvent, useCallback, useContext } from "react";
+import React, { MouseEvent, useCallback } from "react";
 import styles from './index.module.scss'
 import { 
     displayTaskType, getDateToDisplayTask, getFullNameOfWeekDay 
 } from "../../../utils";
 import classNames from "classnames";
-import { AppContext } from "../../../../store/context";
 import { observer } from "mobx-react-lite";
 import { Button } from "@mantine/core";
+import { rootStore } from "../../../../store/root-store";
 
 export const DisplayTaskData = observer(() => {
     const { 
-        modalState: { setModalOpen, setModalClose },
-        taskState: { displayedTask },
-        uiState: { colorTheme }
-    } = useContext(AppContext)
+        modalStore: { setModalOpen, setModalClose },
+        taskStore: { displayedTask },
+        uiStore: { colorTheme }
+    } = rootStore
     
     const handleUpdateTaskOnClick = useCallback(() => {
         setModalOpen('new-task')

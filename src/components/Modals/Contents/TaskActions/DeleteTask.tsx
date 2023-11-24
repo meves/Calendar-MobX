@@ -1,16 +1,16 @@
 import React, { MouseEvent, useCallback, useContext } from "react";
-import { AppContext } from "../../../../store/context";
 import { useMutation } from "@tanstack/react-query";
 import { taskApi } from "../../../../rest-api/task-api";
 import { Loader } from "../../../shared/Loader/Loader";
 import { observer } from "mobx-react-lite";
 import { TaskAction } from "./TaskAction";
+import { rootStore } from "../../../../store/root-store";
 
 export const DeleteTask = observer(() => {
     const { 
-        taskState: { displayedTask, deleteTaskAction },
-        modalState: { setModalClose }
-    } = useContext(AppContext)
+        taskStore: { displayedTask, deleteTaskAction },
+        modalStore: { setModalClose }
+    } = rootStore
 
     const { mutate, isError, isPending } = useMutation({
         mutationFn: (id: number) => taskApi.deleteTask(id)

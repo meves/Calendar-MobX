@@ -4,9 +4,9 @@ import classNames from "classnames";
 import { dayDuration } from "../../utils/constants";
 import { Diapason } from "../../utils/types";
 import { getStartEndDates } from "../../utils/getStartEndDates";
-import { AppContext } from "../../../store/context";
 import { Button } from "@mantine/core";
 import { observer } from "mobx-react-lite";
+import { rootStore } from "../../../store/root-store";
 
 export const ButtonsBlock = observer(({
     startDate,
@@ -15,9 +15,9 @@ export const ButtonsBlock = observer(({
     startDate: string
     setDates: Dispatch<SetStateAction<Diapason>>
 }) => {
-    const { setModalOpen } = useContext(AppContext).modalState
-    const { resetDisplayedTask } = useContext(AppContext).taskState
-    const { colorTheme } = useContext(AppContext).uiState
+    const { setModalOpen } = rootStore.modalStore
+    const { resetDisplayedTask } = rootStore.taskStore
+    const { colorTheme } = rootStore.uiStore
 
     const handleSetPrevDateOnclick = useCallback(() => {
         const prevStartDate = new Date(new Date(startDate).getTime() - dayDuration*6)

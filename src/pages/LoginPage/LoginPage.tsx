@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { LoginForm } from "../../components/Login/LoginForm";
 import styles from './index.module.scss'
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../../store/context";
+import { rootStore } from "../../store/root-store";
 
 const LoginPage = observer(() => {
-    const { colorTheme } = useContext(AppContext).uiState
+    const { colorTheme } = rootStore.uiStore
 
     return (
         <section 

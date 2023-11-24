@@ -6,15 +6,18 @@ import { authApi } from "../rest-api/auth-api"
 import { StatusCodes } from "../rest-api/status-codes"
 import { Status } from "./types"
 import { getErrorMessage } from "./utils"
+import { RootStore } from "./root-store"
 
-class AuthState {
+export class AuthStore {
     isAuth: boolean = false
     token: string = ''
     status: Status
     error: string
-    
-    constructor() {
+    rootStore: RootStore
+
+    constructor(rootStore: RootStore) {
         makeAutoObservable(this, {}, {autoBind: true})
+        this.rootStore = rootStore
     }
 
     set IsAuth(isAuth: boolean) {
@@ -69,4 +72,4 @@ class AuthState {
     }
 }
 
-export const authState = new AuthState()
+//export const authState = new AuthState()

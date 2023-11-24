@@ -5,17 +5,19 @@ import styles from './index.module.scss'
 
 export const ModalWrapper = ({
     children,
-    isModalOpen
+    isModalOpen,
+    isContextMenu
 } : {
     children: ReactNode
     isModalOpen: boolean
+    isContextMenu?: boolean
 }) => {
     const {domElement} = useModal(isModalOpen)
 
     return (
         createPortal(
             <div 
-                className={styles.modal}
+                className={`${isContextMenu ? styles.context : styles.modal}`}
             >
                 {children}
             </div>,

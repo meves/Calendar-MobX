@@ -2,7 +2,7 @@ import React, { MouseEvent, useCallback, useContext, useEffect, useState } from 
 import styles from './index.module.scss'
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { AppContext } from "../../../store/context";
+import { rootStore } from "../../../store/root-store";
 
 export const UserIcon = observer(({
     initials
@@ -12,9 +12,9 @@ export const UserIcon = observer(({
     const navigate = useNavigate()
 
     const { 
-        authState: { logout },
-        uiState: { colorTheme }
-    } = useContext(AppContext)
+        authStore: { logout },
+        uiStore: { colorTheme }
+    } = rootStore
     
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
 

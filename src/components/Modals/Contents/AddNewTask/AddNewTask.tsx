@@ -1,5 +1,5 @@
 import React, { 
-    ChangeEvent, FormEvent, MouseEvent, useCallback, useContext, useEffect, useState 
+    ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useState 
 } from "react";
 import styles from './index.module.scss'
 import { REQUIRED } from "../../../Login/libs/constants";
@@ -8,10 +8,10 @@ import { InputName } from "../../../Login/libs/types";
 import { displayError } from "../../../Login/libs/displayError";
 import classNames from "classnames";
 import { TaskTypes } from "../../../Login/libs/enum";
-import { AppContext } from "../../../../store/context";
 import { observer } from "mobx-react-lite";
 import { Button, NativeSelect } from "@mantine/core";
 import { IconChevronDown } from '@tabler/icons-react';
+import { rootStore } from "../../../../store/root-store";
 
 const initialState = {name: '', description: '', date: '', type: ''}
 const initialErrors = {name: '', description: '', date: '', type: ''}
@@ -31,10 +31,10 @@ const typeToString = {
 export const AddNewtask = observer(() => {
     
     const { 
-        taskState: { displayedTask, setCurrentTask },
-        modalState: { setModalClose, setModalOpen },
-        uiState: { colorTheme }
-    } = useContext(AppContext)
+        taskStore: { displayedTask, setCurrentTask },
+        modalStore: { setModalClose, setModalOpen },
+        uiStore: { colorTheme }
+    } = rootStore
     
     const [errors, setErrors] = useState(initialErrors)
 

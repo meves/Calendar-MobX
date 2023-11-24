@@ -1,16 +1,14 @@
-import React, { ReactNode } from "react";
-import { AppContext, appState } from "../../store/context";
+// import React, { ReactNode } from "react";
+// import { rootStore } from "../../store/root-store";
 
-export const AppProvider = ({
-    children
-} : {
-    children: ReactNode
-}) => {
-    return (
-        <AppContext.Provider value={appState}>
-            {children}
-        </AppContext.Provider>
-    )
-}
-// @ts-ignore
-window.appState = appState
+// export const AppProvider = ({
+//     children
+// } : {
+//     children: ReactNode
+// }) => {
+//     return (
+//         <AppContext.Provider value={rootStore}>
+//             {children}
+//         </AppContext.Provider>
+//     )
+// }

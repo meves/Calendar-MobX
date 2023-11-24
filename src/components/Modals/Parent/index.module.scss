@@ -10,3 +10,10 @@
     background-color: var(--transparent-modal);
     z-index: 1;
 }
+
+.context {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: aqua;
+}

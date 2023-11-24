@@ -9,7 +9,7 @@ import { UpdatedTask } from "../../../../store/types";
 import { taskApi } from "../../../../rest-api/task-api";
 import { Loader } from "../../../shared/Loader/Loader";
 import { v4 as uuidv4 } from 'uuid'
-import { AppContext } from "../../../../store/context";
+import { rootStore } from "../../../../store/root-store";
 
 export const Tasks = observer(({
     startDate,
@@ -20,7 +20,7 @@ export const Tasks = observer(({
     endDate: string
     day: number
 }) => {
-    const { tasks, updateTaskAction  } = useContext(AppContext).taskState
+    const { tasks, updateTaskAction  } = rootStore.taskStore
 
     const { mutate, isPending, isError} = useMutation({
         mutationFn: ({ id, task }: UpdatedTask) => taskApi.updateTask({id, task})
